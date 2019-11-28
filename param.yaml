@@ -1,0 +1,11 @@
+#configuration
+
+---
+LASER_RANGE: 1.4
+ROBOT_LENGTH: 0.25
+agent_num: 2
+poses_origin: [[0,0],[1,1]]
+car_ips: ['172.16.0.207', '172.16.0.176']
+car_targets: [[3.91, 1.05], [1.71, 3.95]]
+eps: 0.1
+...
