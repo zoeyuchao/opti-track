@@ -1,0 +1,81 @@
+<launch>
+
+  # <arg name="server" default="localhost"/>
+
+  <rosparam param="using_keyboard">False</rosparam>
+
+  <param name="agent_num" type="int" value="4" />
+
+  <rosparam param="car_ips">[['172.16.1.52'],['172.16.1.58'],['172.16.1.59'],['172.16.1.55']]</rosparam>
+
+  <rosparam param="poses_origin">[[1.15,0.06],[1.20,2.48],[3.60,2.46],[3.55,0.04]]</rosparam>
+
+  <param name="eps" type="double" value="0.1" />
+
+  <param name="radius" type="double" value="0.25" />
+
+  <param name="R_safe" type="double" value="0" />
+
+  <rosparam param="is_reset">False</rosparam>
+
+  <rosparam param="is_finish">False</rosparam>
+
+  <rosparam param="unset_list">[]</rosparam>
+
+  <rosparam param="unfinish_list">[]</rosparam>
+
+  <rosparam param="crash_list">[]</rosparam>
+
+  <rosparam param="car_targets">[[3.60,2.46],[3.55,0.04],[1.15,0.06],[1.20,2.48]]</rosparam>
+
+  <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen">
+    <rosparam subst_value="true">
+      # server: $(arg server)
+      server: 172.16.0.7
+      port: 3883
+
+      update_frequency: 100.0
+      frame_id: world
+
+      # Use the VRPN server's time, or the client's ROS time.
+      use_server_time: false
+      broadcast_tf: true
+
+      # Must either specify refresh frequency > 0.0, or a list of trackers to create
+      refresh_tracker_frequency: 1.0
+      #trackers:
+      #- FirstTracker
+      #- SecondTracker
+    </rosparam>
+  </node>
+
+  <node pkg="vrpn_keyboard_control" type="vrpn_pose.py" name="vrpn_pose" output="screen">
+
+  </node>
+
+
+  <node pkg="vrpn_keyboard_control" type="crash_checker.py" name="crash_checker" output="screen">
+  
+  </node>
+
+  <node pkg="vrpn_keyboard_control" type="controller.py" name="controller" output="screen">
+  
+  </node>
+
+  <node pkg="vrpn_keyboard_control" type="Transer.py" name="Transer" output="screen">
+  
+  </node>
+
+  <node pkg="vrpn_keyboard_control" type="tcp_server.py" name="tcp_server" output="screen">
+
+    <param name="tcp_ip" value="172.16.0.44" />
+
+    <rosparam param="tcp_port">8888</rosparam>
+  
+  </node>
+
+  <node pkg="vrpn_keyboard_control" type="set_action_server.py" name="set_action_server" output="screen">
+  
+  </node>
+
+</launch>
